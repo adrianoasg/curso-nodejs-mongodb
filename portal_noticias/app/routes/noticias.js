@@ -1,5 +1,18 @@
 module.exports = function(application) {
+
     application.get('/noticias', function(req, res) {
-        res.render('noticias/noticias')
+
+        const mysql = require('mysql')
+
+        const connection = mysql.createConnection({
+            host : 'localhost',
+            user : 'admin',
+            password : 'abcd1234',
+            database : 'portal_noticias'
+        })
+
+        connection.query('select * from noticias', function(error, result) {
+           res.render('noticias/noticias', {noticias : result})
+        })
     })
 }
