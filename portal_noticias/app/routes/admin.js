@@ -6,13 +6,10 @@ module.exports = function(application) {
     application.post('/noticias/salvar', function(req, res) {
         const noticia = req.body
 
-        // Recuperar conexão
-        // Recuperar model
-        // Enviar p/ function salvar noticia e uma function de calback
         const connection = application.config.dbConnection()
-        const noticiasModel = application.app.models.noticiasModel
+        const noticiasModel = new application.app.models.NoticiasDAO(connection)
 
-        noticiasModel.salvarNoticia(noticia, connection, function(error, result){
+        noticiasModel.salvarNoticia(noticia, function(error, result){
             res.redirect('/noticias')
          })
     })
